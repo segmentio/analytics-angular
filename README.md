@@ -1,2 +1,4 @@
 # analytics.js-angular-quickstart
-Quickstart: Analytics.js + Angular
+
+This is a blank template for analytics.js-angular-quickstart
+
