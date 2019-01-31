@@ -1,11 +1,11 @@
 {
-  "name": "analytics.js-angular-quickstart",
-  "description": "Quickstart guide for Analytics.js + Angular",
+  "name": "analytics-angular",
+  "description": "The hassle-free way to integrate analytics into your Angular application.",
   "version": "1.0.0",
   "contributors": [
     "William Grosset (https://williamgrosset.com)"
   ],
-  "repository": "segmentio/analytics.js-angular-quickstart",
+  "repository": "segmentio/analytics-angular",
   "private": true,
   "scripts": {
     "ng": "ng",

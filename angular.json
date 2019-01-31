@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "analytics.js-angular-quickstart": {
+    "analytics-angular": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/analytics.js-angular-quickstart",
+            "outputPath": "dist/analytics-angular",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -57,18 +57,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "analytics.js-angular-quickstart:build"
+            "browserTarget": "analytics-angular:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "analytics.js-angular-quickstart:build:production"
+              "browserTarget": "analytics-angular:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "analytics.js-angular-quickstart:build"
+            "browserTarget": "analytics-angular:build"
           }
         },
         "test": {
@@ -102,7 +102,7 @@
         }
       }
     },
-    "analytics.js-angular-quickstart-e2e": {
+    "analytics-angular-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "prefix": "",
@@ -111,11 +111,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "analytics.js-angular-quickstart:serve"
+            "devServerTarget": "analytics-angular:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "analytics.js-angular-quickstart:serve:production"
+              "devServerTarget": "analytics-angular:serve:production"
             }
           }
         },
@@ -131,5 +131,5 @@
       }
     }
   },
-  "defaultProject": "analytics.js-angular-quickstart"
+  "defaultProject": "analytics-angular"
 }
