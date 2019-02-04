@@ -41,14 +41,14 @@ In this tutorial you'll add your write key to this Angular demo app to start sen
 Start sending data from any [source](https://segment.com/docs/guides/general/what-is-a-source?utm_source=github&utm_medium=click&utm_campaign=protos_angular) and see events live in the Segment **debugger**:
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/16131737/51933162-8a6d9180-23b5-11e9-909b-d7737591b09a.gif"/>
+  <img src="https://user-images.githubusercontent.com/16131737/52242244-fe62da80-288a-11e9-98a5-b3c7bd3c891d.gif"/>
 </div>
 <br/>
 
 Once you have data being sent to Segment, forward this data to any of our 250+ [destinations](https://segment.com/docs/guides/general/what-is-a-destination?utm_source=github&utm_medium=click&utm_campaign=protos_angular):
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/16131737/51859644-7b6edc80-22ec-11e9-8597-113a8b05ee07.gif"/>
+  <img src="https://user-images.githubusercontent.com/16131737/52242246-ff940780-288a-11e9-8ab3-e5968df6810a.gif"/>
 </div>
 
 ## 📺 <span name="demo">Demo</span>
