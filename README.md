@@ -26,11 +26,10 @@ Analytics helps you measure your users, product, and business. It unlocks insigh
 4. **Query your data in SQL**. Slice, dice, and analyze your data in detail with Segment SQL. We'll transform and load your customer behavioral data directly from your apps into Amazon Redshift, Google BigQuery, or Postgres. Save weeks of engineering time by not having to invent your own data warehouse and ETL pipeline.
 
     For example, you can capture data on any app:
-    ```js
+    ```javascript
     analytics.track('Order Completed', { price: 99.84 })
     ```
     Then, query the resulting data in SQL:
-
     ```sql
     select * from app.order_completed
     order by price desc
@@ -69,7 +68,6 @@ To start with this demo app, follow the instructions below:
     ```
 
 2. From the command line, use `npm install` to install the dependencies, then `npm start` to run the app.
-
     ```bash
     npm install
     npm start
@@ -98,10 +96,16 @@ To install Segment in your own app, paste the snippet below into the `head` tag 
   }}();
 </script>
 ```
-Now `window.analytics` is loaded and available to use throughout your app!
+
+Now `analytics` is loaded and available to use throughout your app! If you want to explicitly use the `analytics` object in any of your components, you will have to declare a variable for it's usage.
+```javascript
+// Expose analytics variable
+declare const analytics;
+
+export class FooComponent {}
+```
 
 In the next sections you'll build out your implementation to track page loads, to identify individual users of your app, and track the actions they take.
-
 
 ## 📱 Step 2: Track Page Views in an SPA
 > **Tip!** If your Angular application is **not** a Single Page application, you can uncomment the section in the above snippet and skip to Step 3.
@@ -114,22 +118,20 @@ This means that using `analytics.page()` in `index.html` on a SPA will not detec
 
 If you separate your pages into their own components and allow the [`RouterOutlet`](https://angular.io/guide/router#router-outlet) component to handle when the page renders, you can use `ngOnInit` to invoke `page` calls. The example below shows one way you could do this.
 
-```JSX
-export default class HomePage extends Component {
-  componentDidMount() {
-    window.analytics.page('Home');
-  }
+```javascript
+declare const analytics;
 
-  render() {
-    return (
-      <h1>
-        Home page.
-      </h1>
-    );
+@Component({
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
+})
+export class HomeComponent implements OnInit {
+  ngOnInit() {
+    analytics.page('Home');
   }
 }
 ```
-
 
 ## 🔍 Step 3: Identify Users
 The `identify` method is how you tell Segment who the current user is. It includes a unique User ID and any optional traits you can pass on about them. You can read more about this in the [identify reference](https://segment.com/docs/sources/website/analytics.js/#identify?utm_source=github&utm_medium=click&utm_campaign=protos_angular).
@@ -139,7 +141,7 @@ The `identify` method is how you tell Segment who the current user is. It includ
 Here's what a basic call to `identify` might look like:
 
 ```javascript
-window.analytics.identify('f4ca124298', {
+analytics.identify('f4ca124298', {
   name: 'Michael Bolton',
   email: 'mbolton@initech.com'
 });
@@ -147,40 +149,29 @@ window.analytics.identify('f4ca124298', {
 
 This call identifies Michael by his unique User ID and labels him with `name` and `email` traits.
 
-In Angular, if you have a form where users sign up or log in, you can use the `onSubmit` handler to call `identify`, as in the example below:
+In Angular, if you have a form where users sign up or log in, you can use the `(ngSubmit)` handler to call `identify`, as in the example below:
 
-```JSX
-export default class IdentifyForm extends Component {
-  state = {
-    name: '',
-    email: ''
-  };
+```javascript
+declare const analytics;
 
-  handleChange(event) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit() {
-    const { name, email } = this.state;
-
+@Component({
+  selector: 'app-identify-form',
+  template: `
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <input name="name" type="text" ngModel required>
+      <input name="email" type="email" ngModel required>
+      <input type="submit" value="Submit">
+    </form>
+  `
+})
+export class IdentifyFormComponent {
+  onSubmit(f: NgForm) {
     // Add your own unique ID here or we will automatically assign an anonymousID
-    window.analytics.identify({
-      name,
-      email
+    analytics.identify({
+      name: f.value.name,
+      email: f.value.email
     });
   }
-
-  render() {
-    const { name, email } = this.state;
-
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input name="name" type="text" value={name} onChange={this.handleChange} />
-        <input name="email" type="email" value={email} onChange={this.handleChange} />
-        <input type="submit" value="Submit" />
-      </form>
-    );
- }
 }
 ```
 
@@ -192,7 +183,7 @@ The `track` method is how you tell Segment about which actions your users are pe
 Here's what a call to `track` might look like when a user bookmarks an article:
 
 ```javascript
-window.analytics.track('Article Bookmarked', {
+analytics.track('Article Bookmarked', {
   title: 'Snow Fall',
   subtitle: 'The Avalanche at Tunnel Creek',
   author: 'John Branch'
@@ -202,20 +193,22 @@ window.analytics.track('Article Bookmarked', {
 The snippet tells us that the user just triggered the **Article Bookmarked** event, and the article they bookmarked was the `Snow Fall` article authored by `John Branch`. Properties can be anything you want to associate to an event when it is tracked.
 
 ### Track Calls with Event Handlers
-In Angular, you can use several event handlers, such as `onClick`, `onSubmit`, `onMouseOver`, to call the `track` events. In the example below, we use the `onClick` handler to make a `track` call to log a `User Signup`.
+In Angular, you can use several event handlers, such as `(click)`, `(submit)`, `(mouseenter)`, to call the `track` events. In the example below, we use the `(click)` handler to make a `track` call to log a `User Signup`.
 
-```JSX
-export default class SignupButton extends Component {
+```javascript
+declare const analytics;
+
+@Component({
+  selector: 'app-signup-btn',
+  template: `
+    <button (click)="trackevent()">
+      Signup with Segment today!
+    </button>
+  `
+})
+export class SignupButtonComponent {
   trackEvent() {
-    window.analytics.track('User Signup');
-  }
-
-  render() {
-    return (
-      <button onClick={this.trackEvent}>
-        Signup with Segment today!
-      </button>
-    );
+    analytics.track('User Signup');
   }
 }
 ```
@@ -223,83 +216,28 @@ export default class SignupButton extends Component {
 > **Tip!** Other handlers might be better for other situations. You can see the [Angular docs on event handlers](https://angular.io/guide/user-input) for more information.
 
 ### Track Calls with Lifecycle Methods
-[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component and that are outside the scope of a `page` call, then you can use `componentDidMount` to trigger a `track` event:
+[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component and that are outside the scope of a `page` call, then you can use `ngOnInit` to trigger a `track` event:
 
-```JSX
-export default class VideoPlayer extends Component {
-  componentDidMount() {
-    window.analytics.track('Video Played');
-  }
+```javascript
+declare const analytics;
 
-  render() {
-    return (
-      <video autoplay>
-        <source src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="video/mp4">
-      </video>
-    );
+@Component({
+  selector: 'app-video-player',
+  template: `
+    <video autoplay>
+      <source src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" type="video/youtube">
+    </video>
+  `
+})
+export class VideoPlayerComponent implements OnInit {
+  ngOnInit() {
+    analytics.track('Video Played');
   }
 }
 ```
 
 ## 🤔 What's next?
 Once you've added a few track calls, **you're done**! You've successfully installed `Analytics.js` tracking. Now you're ready to see your data in the Segment dashboard, and turn on any destination tools. 🎉
-
-## 🎓 Advanced
-Once you've mastered the basics, here are some advanced use cases you can apply with Segment.
-
-### Track Calls for Error Logging
-You can also use `track` calls to log errors, using a higher-order component such as `ErrorBoundary` to wrap around child components. Then, when an error occurs you log the error with `track` and gracefully display the appropriate child component. In this example, when an error is caught by `componentDidCatch`, we set the state, `track` the error, and then the `ErrorComponent` will be rendered.
-
-```JSX
-export default class ErrorBoundary extends Component {
-  static propTypes = {
-    /**
-     * Fallback component to display when uncaught exceptions occur in a component tree:
-     * function({ error: PropTypes.object, errorInfo: PropTypes.object }): PropTypes.node
-     */
-    errorComponent: PropTypes.func
-  };
-
-  static defaultProps = {
-    errorComponent: () => null
-  };
-
-  state = {
-    error: null,
-    errorInfo: null
-  };
-
-  componentDidCatch(error, errorInfo) {
-    const { error, errorInfo } = this.state;
-
-    this.setState({
-      error,
-      errorInfo
-    });
-
-    window.analytics.track('JavaScript Error', {
-      error,
-      errorInfo
-    });
-  }
-
-  render() {
-    const { error, errorInfo } = this.state;
-    const { errorComponent: ErrorComponent, children } = this.props;
-
-    return error ? (
-      <ErrorComponent
-        error={error}
-        errorInfo={errorInfo}
-      />
-    ) : (
-      children
-    );
-  }
-}
-```
-
-Interested more in data standardization? Check out our [protocols product](https://segment.com/product/protocols?utm_source=github&utm_medium=click&utm_campaign=protos_angular) to improve data quality.
 
 You may wondering what you can be doing with all the raw data you are sending to Segment from your Angular app. With our [warehouses product](https://segment.com/product/warehouses?utm_source=github&utm_medium=click&utm_campaign=protos_angular), your analysts and data engineers can shift focus from data normalization and pipeline maintenance to providing insights for business teams. Having the ability to query data directly in SQL and layer on visualization tools can take your product to the next level.
 
