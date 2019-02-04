@@ -102,7 +102,11 @@ Now `analytics` is loaded and available to use throughout your app! If you want 
 // Expose analytics variable
 declare const analytics;
 
-export class FooComponent {}
+export class Foo {
+  bar() {
+    analytics.track('Learned Analytics Usage');
+  }
+}
 ```
 
 In the next sections you'll build out your implementation to track page loads, to identify individual users of your app, and track the actions they take.
@@ -216,7 +220,7 @@ export class SignupButtonComponent {
 > **Tip!** Other handlers might be better for other situations. You can see the [Angular docs on event handlers](https://angular.io/guide/user-input) for more information.
 
 ### Track Calls with Lifecycle Methods
-[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component and that are outside the scope of a `page` call, then you can use `ngOnInit` to trigger a `track` event:
+[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component or a [`*ngIf`](https://angular.io/api/common/NgIf) conditional, then you can use `ngOnInit` to trigger a `track` event:
 
 ```javascript
 declare const analytics;
