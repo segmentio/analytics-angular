@@ -118,7 +118,7 @@ The snippet from Step 1 loads `Analytics.js` into your app and is ready to track
 
 The `page` method lets you record page views on your website, along with optional information about the page being viewed. You can read more about how this works in the [page reference](https://segment.com/docs/sources/website/analytics.js/#page?utm_source=github&utm_medium=click&utm_campaign=protos_angular).
 
-This means that using `analytics.page()` in `index.html` on a SPA will not detect page component loads, and you'll need to simulate a page load some other way. You can use Angular's in-house [routing](https://angular.io/guide/router) and lifecycle methods to create `page` calls.
+This means that using `analytics.page()` in `index.html` on a SPA will not detect page component loads, and you'll need to simulate a page load some other way. You can use Angular's in-house [routing](https://angular.io/guide/router) and lifecycle hooks to create `page` calls.
 
 If you separate your pages into their own components and allow the [`RouterOutlet`](https://angular.io/guide/router#router-outlet) component to handle when the page renders, you can use `ngOnInit` to invoke `page` calls. The example below shows one way you could do this.
 
@@ -219,8 +219,8 @@ export class SignupButtonComponent {
 
 > **Tip!** Other handlers might be better for other situations. You can see the [Angular docs on event handlers](https://angular.io/guide/user-input) for more information.
 
-### Track Calls with Lifecycle Methods
-[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component or a [`*ngIf`](https://angular.io/api/common/NgIf) conditional, then you can use `ngOnInit` to trigger a `track` event:
+### Track Calls with Lifecycle Hooks
+[Lifecycle hooks](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle hook in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component or a [`*ngIf`](https://angular.io/api/common/NgIf) conditional, then you can use `ngOnInit` to trigger a `track` event:
 
 ```javascript
 declare const analytics;
@@ -239,6 +239,8 @@ export class VideoPlayerComponent implements OnInit {
   }
 }
 ```
+
+> **Tip!** Other hooks might be better for other situations. You can see the [Angular docs on lifecycle hooks](https://angular.io/guide/lifecycle-hooks) for more information.
 
 ## 🤔 What's next?
 Once you've added a few track calls, **you're done**! You've successfully installed `Analytics.js` tracking. Now you're ready to see your data in the Segment dashboard, and turn on any destination tools. 🎉
