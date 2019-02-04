@@ -55,7 +55,7 @@ Once you have data being sent to Segment, forward this data to any of our 250+ [
 ## 📺 <span name="demo">Demo</span>
 To start with this demo app, follow the instructions below:
 
-1. [Sign up](https://app.segment.com/signup?utm_source=github&utm_medium=click&utm_campaign=protos_angular) with Segment and edit the snippet in [index.html](https://github.com/segmentio/analytics-react/blob/master/public/index.html#L28) to replace `YOUR_WRITE_KEY` with your Segment **Write Key**.
+1. [Sign up](https://app.segment.com/signup?utm_source=github&utm_medium=click&utm_campaign=protos_angular) with Segment and edit the snippet in [index.html](https://github.com/segmentio/analytics-angular/blob/master/src/index.html#L11) to replace `YOUR_WRITE_KEY` with your Segment **Write Key**.
     > **Tip!** You can find your key in your project setup guide or settings in the Segment.
 
     Your snippet will look something like the example below.
@@ -80,10 +80,10 @@ To start with this demo app, follow the instructions below:
     - Page event: `About` - When someone views the `about` page.
     - Track event: `Learn Angular Link Clicked` - When someone clicks the "Learn Angular" link.
 
-Congrats! You're seeing live data from your demo React app in Segment! 🎉
+Congrats! You're seeing live data from your demo Angular app in Segment! 🎉
 
 # 🔌 Installing on Your App
-Okay, the demo app is cool, but how do I get this in my own React app? Follow the steps below.
+Okay, the demo app is cool, but how do I get this in my own Angular app? Follow the steps below.
 
 ## ✂️ Step 1: Copy the Snippet
 To install Segment in your own app, paste the snippet below into the `head` tag of your site. Then, [sign up](https://app.segment.com/signup?utm_source=github&utm_medium=click&utm_campaign=protos_angular) with Segment and replace `YOUR_WRITE_KEY` in the snippet with your Segment project's **Write Key**.
@@ -104,15 +104,15 @@ In the next sections you'll build out your implementation to track page loads, t
 
 
 ## 📱 Step 2: Track Page Views in an SPA
-> **Tip!** If your React application is **not** a Single Page application, you can uncomment the section in the above snippet and skip to Step 3.
+> **Tip!** If your Angular application is **not** a Single Page application, you can uncomment the section in the above snippet and skip to Step 3.
 
-The snippet from Step 1 loads `Analytics.js` into your app and is ready to track page loads. However, most React apps are a Single Page App (SPA), and in SPAs clicking a link or a new tab does not reload the whole webpage.
+The snippet from Step 1 loads `Analytics.js` into your app and is ready to track page loads. However, most Angular apps are a Single Page App (SPA), and in SPAs clicking a link or a new tab does not reload the whole webpage.
 
 The `page` method lets you record page views on your website, along with optional information about the page being viewed. You can read more about how this works in the [page reference](https://segment.com/docs/sources/website/analytics.js/#page?utm_source=github&utm_medium=click&utm_campaign=protos_angular).
 
-This means that using `analytics.page()` in `index.html` on a SPA will not detect page component loads, and you'll need to simulate a page load some other way. You can use [react-router](https://reacttraining.com/react-router) and React's lifecycle methods to create `page` calls.
+This means that using `analytics.page()` in `index.html` on a SPA will not detect page component loads, and you'll need to simulate a page load some other way. You can use Angular's in-house [routing](https://angular.io/guide/router) and lifecycle methods to create `page` calls.
 
-If you separate your pages into their own components and allow the [`<Route />`](https://reacttraining.com/react-router/core/api/Route) component to handle when the page renders, you can use `componentDidMount` to invoke `page` calls. The example below shows one way you could do this.
+If you separate your pages into their own components and allow the [`RouterOutlet`](https://angular.io/guide/router#router-outlet) component to handle when the page renders, you can use `ngOnInit` to invoke `page` calls. The example below shows one way you could do this.
 
 ```JSX
 export default class HomePage extends Component {
@@ -147,7 +147,7 @@ window.analytics.identify('f4ca124298', {
 
 This call identifies Michael by his unique User ID and labels him with `name` and `email` traits.
 
-In React, if you have a form where users sign up or log in, you can use the `onSubmit` handler to call `identify`, as in the example below:
+In Angular, if you have a form where users sign up or log in, you can use the `onSubmit` handler to call `identify`, as in the example below:
 
 ```JSX
 export default class IdentifyForm extends Component {
@@ -184,7 +184,7 @@ export default class IdentifyForm extends Component {
 }
 ```
 
-> **Tip!** Other handlers might be better for other situations. You can see the [React docs on event handlers](https://reactjs.org/docs/handling-events.html) for more information.
+> **Tip!** Other handlers might be better for other situations. You can see the [Angular docs on event handlers](https://angular.io/guide/user-input) for more information.
 
 ## ⏰ Step 4: Track Actions
 The `track` method is how you tell Segment about which actions your users are performing on your site. Every action triggers what we call an "event", which can also have associated properties. It is important to figure out exactly what events you want to `track` instead of tracking anything and everything. A good way to do this is to build a [tracking plan](https://segment.com/docs/guides/sources/can-i-see-an-example-of-a-tracking-plan?utm_source=github&utm_medium=click&utm_campaign=protos_angular). You can read more about `track` in the [track reference](https://segment.com/docs/sources/website/analytics.js/#track?utm_source=github&utm_medium=click&utm_campaign=protos_angular).
@@ -202,7 +202,7 @@ window.analytics.track('Article Bookmarked', {
 The snippet tells us that the user just triggered the **Article Bookmarked** event, and the article they bookmarked was the `Snow Fall` article authored by `John Branch`. Properties can be anything you want to associate to an event when it is tracked.
 
 ### Track Calls with Event Handlers
-In React, you can use several event handlers, such as `onClick`, `onSubmit`, `onMouseOver`, to call the `track` events. In the example below, we use the `onClick` handler to make a `track` call to log a `User Signup`.
+In Angular, you can use several event handlers, such as `onClick`, `onSubmit`, `onMouseOver`, to call the `track` events. In the example below, we use the `onClick` handler to make a `track` call to log a `User Signup`.
 
 ```JSX
 export default class SignupButton extends Component {
@@ -220,10 +220,10 @@ export default class SignupButton extends Component {
 }
 ```
 
-> **Tip!** Other handlers might be better for other situations. You can see the [React docs on event handlers](https://reactjs.org/docs/handling-events.html) for more information.
+> **Tip!** Other handlers might be better for other situations. You can see the [Angular docs on event handlers](https://angular.io/guide/user-input) for more information.
 
 ### Track Calls with Lifecycle Methods
-[Lifecycle methods](https://reactjs.org/docs/react-component.html#the-component-lifecycle) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component and that are outside the scope of a `page` call, then you can use `componentDidMount` to trigger a `track` event:
+[Lifecycle methods](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle method in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component and that are outside the scope of a `page` call, then you can use `componentDidMount` to trigger a `track` event:
 
 ```JSX
 export default class VideoPlayer extends Component {
@@ -299,45 +299,9 @@ export default class ErrorBoundary extends Component {
 }
 ```
 
-### Typechecking with PropTypes
-You can use typechecking with [`prop-types`](https://reactjs.org/docs/typechecking-with-proptypes.html) to catch a lot of potential bugs and prevent handing down information in the wrong format. For example, you can enforce a format for `user` related objects which can help with data standardization. You can get creative with the traits you expect to be sent to Segment for `identify` and `track`:
-
-```JSX
-export default class User extends Component {
-  static propTypes = {
-    id: PropTypes.string,
-    identifyTraits: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      email: PropTypes.string.isRequired,
-      isAuthorized: PropTypes.bool.isRequired
-    }),
-    trackTitle: PropTypes.string,
-    trackTraits: PropTypes.object
-  };
-
-  identify() {
-    const { id, identifyTraits } = this.props;
-
-    window.analytics.identify(id, identifyTraits);
-  }
-
-  track() {
-    const { trackTitle, trackTraits } = this.props;
-
-    window.analytics.track(trackTitle, trackTraits);
-  }
-
-  render() {
-    const { children } = this.props;
-
-    return children;
-  }
-}
-```
-
 Interested more in data standardization? Check out our [protocols product](https://segment.com/product/protocols?utm_source=github&utm_medium=click&utm_campaign=protos_angular) to improve data quality.
 
-You may wondering what you can be doing with all the raw data you are sending to Segment from your React app. With our [warehouses product](https://segment.com/product/warehouses?utm_source=github&utm_medium=click&utm_campaign=protos_angular), your analysts and data engineers can shift focus from data normalization and pipeline maintenance to providing insights for business teams. Having the ability to query data directly in SQL and layer on visualization tools can take your product to the next level.
+You may wondering what you can be doing with all the raw data you are sending to Segment from your Angular app. With our [warehouses product](https://segment.com/product/warehouses?utm_source=github&utm_medium=click&utm_campaign=protos_angular), your analysts and data engineers can shift focus from data normalization and pipeline maintenance to providing insights for business teams. Having the ability to query data directly in SQL and layer on visualization tools can take your product to the next level.
 
 ## 💾 Warehouses
 A warehouse is a special subset of destinations where we load data in bulk at a regular intervals, inserting and updating events and objects while automatically adjusting their schema to fit the data you've sent to Segment. We do the heavy lifting of capturing, schematizing, and loading your user data into your data warehouse of choice.
@@ -347,9 +311,6 @@ Examples of data warehouses include Amazon Redshift, Google BigQuery, MySQL, and
 <div align="center">
   <img src="https://user-images.githubusercontent.com/16131737/51726992-d23f9200-201e-11e9-8b68-608ebaaa6c65.gif"/>
 </div>
-
-## 🔒 What about privacy?
-Want to allow your visitors to control and customize their tracking preferences on your site? Integrate our [consent-manager](https://github.com/segmentio/consent-manager), which is imported via the snippet and uses our pre-built React component under the hood.
 
 ## 📝 Docs & Feedback
 Check out our full [Analytics.js reference](https://segment.com/docs/sources/website/analytics.js?utm_source=github&utm_medium=click&utm_campaign=protos_angular) to see what else is possible, or read about the [Tracking API methods](https://segment.com/docs/sources/server/http?utm_source=github&utm_medium=click&utm_campaign=protos_angular) to get a sense for the bigger picture. If you have any questions, or see anywhere we can improve our documentation, [let us know](https://segment.com/contact?utm_source=github&utm_medium=click&utm_campaign=protos_angular)!
