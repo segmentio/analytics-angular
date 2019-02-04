@@ -10,6 +10,6 @@ declare const analytics;
 })
 export class AppComponent {
   trackClickEvent() {
-    analytics.track('Clicked Learn Angular Link');
+    analytics.track('Learn Angular Link Clicked');
   }
 }
