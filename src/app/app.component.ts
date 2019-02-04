@@ -8,7 +8,6 @@ declare const analytics;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-
 export class AppComponent {
   trackClickEvent() {
     analytics.track('Clicked Learn Angular Link');
