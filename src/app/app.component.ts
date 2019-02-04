@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 // Expose analytics variable
-declare var analytics;
+declare const analytics;
 
 @Component({
   selector: 'app-root',
@@ -10,8 +10,6 @@ declare var analytics;
 })
 
 export class AppComponent {
-  title = 'Quickstart: Analytics.js + Angular';
-
   trackClickEvent() {
     analytics.track('Clicked Learn Angular Link');
   }
