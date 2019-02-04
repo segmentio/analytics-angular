@@ -1,6 +1,6 @@
 # Segment Angular Quickstart Guide
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/16131737/51960819-6b035280-240f-11e9-93c2-95d6a62822db.png"/>
+  <img src="https://user-images.githubusercontent.com/16131737/52240871-07ea4380-2887-11e9-95ac-094d66833bed.png"/>
   <p><b><i>You can't fix what you can't measure</i></b></p>
 </div>
 
@@ -201,7 +201,7 @@ declare const analytics;
 @Component({
   selector: 'app-signup-btn',
   template: `
-    <button (click)="trackevent()">
+    <button (click)="trackEvent()">
       Signup with Segment today!
     </button>
   `
