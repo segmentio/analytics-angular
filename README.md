@@ -97,17 +97,14 @@ To install Segment in your own app, paste the snippet below into the `head` tag 
 </script>
 ```
 
-Now `analytics` is loaded and available to use throughout your app! If you want to explicitly use the `analytics` object in any of your components, you will have to declare a variable for it's usage.
+Typescript is unaware of the `analytics` property on the `window` object. In order to use `window.analytics` in your app, you need to **declare** a global by extending window. In our example app, we put the following declaration in `app.module.ts`:
 ```javascript
-// Expose analytics variable
-declare const analytics;
-
-export class Foo {
-  bar() {
-    analytics.track('Learned Analytics Usage');
-  }
+declare global {
+  interface Window { analytics: any; }
 }
 ```
+
+Now `window.analytics` is loaded and available to use throughout your app!
 
 In the next sections you'll build out your implementation to track page loads, to identify individual users of your app, and track the actions they take.
 
@@ -123,8 +120,6 @@ This means that using `analytics.page()` in `index.html` on a SPA will not detec
 If you separate your pages into their own components and allow the [`RouterOutlet`](https://angular.io/guide/router#router-outlet) component to handle when the page renders, you can use `ngOnInit` to invoke `page` calls. The example below shows one way you could do this.
 
 ```javascript
-declare const analytics;
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -132,7 +127,7 @@ declare const analytics;
 })
 export class HomeComponent implements OnInit {
   ngOnInit() {
-    analytics.page('Home');
+    window.analytics.page('Home');
   }
 }
 ```
@@ -145,7 +140,7 @@ The `identify` method is how you tell Segment who the current user is. It includ
 Here's what a basic call to `identify` might look like:
 
 ```javascript
-analytics.identify('f4ca124298', {
+window.analytics.identify('f4ca124298', {
   name: 'Michael Bolton',
   email: 'mbolton@initech.com'
 });
@@ -156,8 +151,6 @@ This call identifies Michael by his unique User ID and labels him with `name` an
 In Angular, if you have a form where users sign up or log in, you can use the `(ngSubmit)` handler to call `identify`, as in the example below:
 
 ```javascript
-declare const analytics;
-
 @Component({
   selector: 'app-identify-form',
   template: `
@@ -171,7 +164,7 @@ declare const analytics;
 export class IdentifyFormComponent {
   onSubmit(form: NgForm) {
     // Add your own unique ID here or we will automatically assign an anonymousID
-    analytics.identify({
+    window.analytics.identify({
       name: form.value.name,
       email: form.value.email
     });
@@ -187,7 +180,7 @@ The `track` method is how you tell Segment about which actions your users are pe
 Here's what a call to `track` might look like when a user bookmarks an article:
 
 ```javascript
-analytics.track('Article Bookmarked', {
+window.analytics.track('Article Bookmarked', {
   title: 'Snow Fall',
   subtitle: 'The Avalanche at Tunnel Creek',
   author: 'John Branch'
@@ -200,8 +193,6 @@ The snippet tells us that the user just triggered the **Article Bookmarked** eve
 In Angular, you can use several event handlers, such as `(click)`, `(submit)`, `(mouseenter)`, to call the `track` events. In the example below, we use the `(click)` handler to make a `track` call to log a `User Signup`.
 
 ```javascript
-declare const analytics;
-
 @Component({
   selector: 'app-signup-btn',
   template: `
@@ -212,7 +203,7 @@ declare const analytics;
 })
 export class SignupButtonComponent {
   trackEvent() {
-    analytics.track('User Signup');
+    window.analytics.track('User Signup');
   }
 }
 ```
@@ -223,8 +214,6 @@ export class SignupButtonComponent {
 [Lifecycle hooks](https://angular.io/guide/user-input) are also great for tracking particular events, and in fact we used a lifecycle hook in Step 2 to track page component loads. For example, if you want to track components that are conditionally rendered from a parent component or a [`*ngIf`](https://angular.io/api/common/NgIf) conditional, then you can use `ngOnInit` to trigger a `track` event:
 
 ```javascript
-declare const analytics;
-
 @Component({
   selector: 'app-video-player',
   template: `
@@ -235,7 +224,7 @@ declare const analytics;
 })
 export class VideoPlayerComponent implements OnInit {
   ngOnInit() {
-    analytics.track('Video Played');
+    window.analytics.track('Video Played');
   }
 }
 ```
@@ -246,8 +235,6 @@ export class VideoPlayerComponent implements OnInit {
 [Transition](https://angular.io/guide/transition-and-triggers) wrapper components control when UI renders. Transitions, such as `@animation.start` and `@animation.done`, are fired for different times in a component lifecycle. In this example, when the `Toggle` button is clicked, our text is rendered, and the `@animation.done` trigger fires a `track` event.
 
 ```javascript
-declare const analytics;
-
 @Component({
   selector: 'app-panel',
   animations: [
@@ -275,7 +262,7 @@ export class PanelComponent {
   show: boolean = false;
 
   onAnimationEvent(event: AnimationEvent) {
-    analytics.track('Destinations Info Toggled');
+    window.analytics.track('Destinations Info Toggled');
   }
 }
 ```
