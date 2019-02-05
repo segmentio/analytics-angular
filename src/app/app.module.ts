@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 
+declare global {
+  interface Window { analytics: any; }
+}
+
 const routes: Routes = [
   {
     path: '',

@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
 
-// Expose analytics variable
-declare const analytics;
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,6 +7,6 @@ declare const analytics;
 })
 export class AppComponent {
   trackClickEvent() {
-    analytics.track('Learn Angular Link Clicked');
+    window.analytics.track('Learn Angular Link Clicked');
   }
 }

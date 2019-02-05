@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-// Expose analytics variable
-declare const analytics;
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -10,6 +7,6 @@ declare const analytics;
 })
 export class HomeComponent implements OnInit {
   ngOnInit() {
-    analytics.page('Home');
+    window.analytics.page('Home');
   }
 }
