@@ -253,7 +253,7 @@ A warehouse is a special subset of destinations where we load data in bulk at a 
 Examples of data warehouses include Amazon Redshift, Google BigQuery, MySQL, and Postgres.
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/16131737/51726992-d23f9200-201e-11e9-8b68-608ebaaa6c65.gif"/>
+  <img src="https://user-images.githubusercontent.com/16131737/52260773-fed79180-28db-11e9-9bc2-f48161f155d5.gif"/>
 </div>
 
 ## 📝 Docs & Feedback
