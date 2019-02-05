@@ -1,0 +1,10 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/analytics-angular
+    docker:
+      - image: circleci/node:8.11
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
