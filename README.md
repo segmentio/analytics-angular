@@ -84,7 +84,8 @@ Congrats! You're seeing live data from your demo Angular app in Segment! 🎉
 Okay, the demo app is cool, but how do I get this in my own Angular app? Follow the steps below.
 
 ## ✂️ Step 1: Copy the Snippet
-To install Segment in your own app, paste the snippet below into the `head` tag of your site. Then, [sign up](https://app.segment.com/signup?utm_source=github&utm_medium=click&utm_campaign=protos_angular) with Segment and replace `YOUR_WRITE_KEY` in the snippet with your Segment project's **Write Key**.
+To install Segment in your own app first [sign up](https://app.segment.com/signup?utm_source=github&utm_medium=click&utm_campaign=protos_angular) with Segment and locate your Segment project's **Write Key**.
+Then, copy and paste the snippet below into the `head` tag of your site. Replace `YOUR_WRITE_KEY` in the snippet below with your Segment project's write key.
 
 > **Tip!** You can find your write key in your Segment project setup guide or settings.
 
@@ -97,7 +98,8 @@ To install Segment in your own app, paste the snippet below into the `head` tag 
 </script>
 ```
 
-Typescript is unaware of the `analytics` property on the `window` object. In order to use `window.analytics` in your app, you need to **declare** a global by extending window. In our example app, we put the following declaration in `app.module.ts`:
+Typescript cannot identify the `analytics` property on the `window` object. To use `window.analytics` in your app, you need to **re-declare** the global variable that extends `window`.
+In our example app, we put the following declaration in `app.module.ts`:
 ```javascript
 declare global {
   interface Window { analytics: any; }
@@ -232,7 +234,7 @@ export class VideoPlayerComponent implements OnInit {
 > **Tip!** Other hooks might be better for other situations. You can see the [Angular docs on lifecycle hooks](https://angular.io/guide/lifecycle-hooks) for more information.
 
 ### Track Calls with Transitions
-[Transition](https://angular.io/guide/transition-and-triggers) wrapper components control when UI renders. Transitions, such as `@animation.start` and `@animation.done`, are fired for different times in a component lifecycle. In this example, when the `Toggle` button is clicked, our text is rendered, and the `@animation.done` trigger fires a `track` event.
+[Transition components](https://angular.io/guide/transition-and-triggers) control when UI elements render. Transitions, such as `@animation.start` and `@animation.done`, are fired at different times during a component lifecycle. In this example, when the `Toggle` button is clicked, some text is rendered, and the `@animation.done` trigger fires a `track` event.
 
 ```javascript
 @Component({
