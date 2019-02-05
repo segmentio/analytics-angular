@@ -169,11 +169,11 @@ declare const analytics;
   `
 })
 export class IdentifyFormComponent {
-  onSubmit(f: NgForm) {
+  onSubmit(form: NgForm) {
     // Add your own unique ID here or we will automatically assign an anonymousID
     analytics.identify({
-      name: f.value.name,
-      email: f.value.email
+      name: form.value.name,
+      email: form.value.email
     });
   }
 }
@@ -243,7 +243,7 @@ export class VideoPlayerComponent implements OnInit {
 > **Tip!** Other hooks might be better for other situations. You can see the [Angular docs on lifecycle hooks](https://angular.io/guide/lifecycle-hooks) for more information.
 
 ### Track Calls with Transitions
-[Transition](https://angular.io/guide/transition-and-triggers) wrapper components control when UI renders. The transition triggers, `@animation.start` and `@animation.done`, are fired for different times in a component lifecycle. In this example, when the `Toggle` button is clicked, our text is rendered, and the `@animation.done` trigger fires a `track` event.
+[Transition](https://angular.io/guide/transition-and-triggers) wrapper components control when UI renders. Transitions, such as `@animation.start` and `@animation.done`, are fired for different times in a component lifecycle. In this example, when the `Toggle` button is clicked, our text is rendered, and the `@animation.done` trigger fires a `track` event.
 
 ```javascript
 declare const analytics;
