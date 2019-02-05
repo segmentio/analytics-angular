@@ -242,6 +242,44 @@ export class VideoPlayerComponent implements OnInit {
 
 > **Tip!** Other hooks might be better for other situations. You can see the [Angular docs on lifecycle hooks](https://angular.io/guide/lifecycle-hooks) for more information.
 
+### Track Calls with Transitions
+[Transition](https://angular.io/guide/transition-and-triggers) wrapper components control when UI renders. The transition triggers, `@animation.start` and `@animation.done`, are fired for different times in a component lifecycle. In this example, when the `Toggle` button is clicked, our text is rendered, and the `@animation.done` trigger fires a `track` event.
+
+```javascript
+declare const analytics;
+
+@Component({
+  selector: 'app-panel',
+  animations: [
+    trigger(
+      'animation', [
+        transition(':enter', [
+          style({ transform: 'translateX(100%)', opacity: 0 }),
+          animate('500ms', style({ transform: 'translateX(0)', opacity: 1 }))
+        ]),
+        transition(':leave', [
+          style({ transform: 'translateX(0)', opacity: 1 }),
+          animate('500ms', style({ transform: 'translateX(100%)', opacity: 0 }))
+        ])
+      ]
+    )
+  ],
+  template: `
+    <button (click)="show = !show">Toggle</button>
+    <div *ngIf="show" (@animation.done)="onAnimationEvent($event)">
+      Integrate with over 200+ destinations!
+    </div>
+  `
+})
+export class PanelComponent {
+  show: boolean = false;
+
+  onAnimationEvent(event: AnimationEvent) {
+    analytics.track('Destinations Info Toggled');
+  }
+}
+```
+
 ## 🤔 What's next?
 Once you've added a few track calls, **you're done**! You've successfully installed `Analytics.js` tracking. Now you're ready to see your data in the Segment dashboard, and turn on any destination tools. 🎉
 
